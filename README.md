@@ -73,6 +73,7 @@ Make sure to configure the following:
 - Passwords are hashed using bcrypt
 - Sensitive credentials should be moved to environment variables
 - Session management is implemented for user authentication
+- "USE YOUR OWN TWILIO KEY"
 
 ## License
 
