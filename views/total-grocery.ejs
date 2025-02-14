@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Grocery List - FarmConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #43c6ac;
+            --secondary-color: #191654;
+            --accent-color: #4CAF50;
+            --text-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --border-radius: 15px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            color: white;
+            margin: 20px 0 40px;
+            animation: fadeInDown 0.8s;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .apartment-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            animation: fadeInUp 0.8s;
+            transition: transform 0.3s ease;
+        }
+
+        .apartment-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .apartment-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .apartment-title i {
+            font-size: 1.5rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.01);
+        }
+
+        td {
+            font-size: 0.95rem;
+        }
+
+        .quantity-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            animation: fadeInUp 1s;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 5px 15px rgba(67, 198, 172, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 198, 172, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .apartment-title {
+                font-size: 1.5rem;
+            }
+            
+            th, td {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Total Grocery List</h1>
+            <p>Fresh from farm to your table</p>
+        </div>
+
+        <% if (aggregatedData && Object.keys(aggregatedData).length > 0) { %>
+            <% for (const apartmentId in aggregatedData) { %>
+                <div class="apartment-section">
+                    <div class="apartment-title">
+                        <i class="fas fa-building"></i>
+                        <%= apartmentId %>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><i class="fas fa-shopping-basket me-2"></i> Item</th>
+                                    <th><i class="fas fa-balance-scale me-2"></i> Total Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                    const apartmentData = aggregatedData[apartmentId];
+                                    apartmentData.forEach(item => { 
+                                %>
+                                    <tr>
+                                        <td><%= item.item %></td>
+                                        <td class="quantity-cell"><%= item.totalQuantity %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Confirmation Buttons for this apartment -->
+                    <div class="button-container">
+                        <!-- Farmer Confirmation -->
+                        <form action="/confirm-farmer/<%= apartmentId %>" method="POST">
+                            <!-- Hidden field to pass 'canSupply' value -->
+                            <input type="hidden" name="canSupply" value="true">
+                            <!-- Button to confirm farmer can supply -->
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check"></i>
+                                Farmer Can Supply
+                            </button>
+                        </form>
+
+                        <!-- Logistics Confirmation -->
+                        <form action="/send-logistics-charge/<%= apartmentId %>" method="GET">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fas fa-truck"></i>
+                                Logistics
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <% } %>
+        <% } else { %>
+            <div class="apartment-section">
+                <div class="empty-state">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>No Grocery Lists Found</h3>
+                    <p>Start by adding items to your grocery list!</p>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
